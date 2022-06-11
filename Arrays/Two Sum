@@ -1,0 +1,53 @@
+Optimised Approach: 
+
+    vector<int> twoSum(vector<int>& nums, int target)
+    {
+        vector<int>v;
+        int n=nums.size();
+        vector<pair<int,int>>newnums(n);
+        for(int i=0;i<n;i++)
+        {
+            newnums[i].first=nums[i];
+            newnums[i].second=i;
+        }
+        sort(newnums.begin(),newnums.end());
+        int i=0;
+        int j=n-1;
+        while(i<j)
+        {
+            if(newnums[i].first+newnums[j].first==target)
+            {
+                v.push_back(newnums[i].second);
+                v.push_back(newnums[j].second);
+                return v;
+            }
+            else if(newnums[i].first+newnums[j].first>target)
+                j--;
+            else
+                i++;
+        }
+        return v;
+    }
+    
+    Another optimsised approach using hashing :
+    
+    vector<int> twoSum(vector<int>& nums, int target)
+    {
+        int n=nums.size();
+        unordered_map<int,int>m;
+        m[nums[0]]=0;
+        vector<int>sol;
+        
+        for(int i=1;i<n;i++)
+        {
+            if(m.find(target-nums[i])!=m.end())
+            {
+                sol.push_back(i);
+                sol.push_back(m[target-nums[i]]);
+                return sol;
+            }
+            else
+                m[nums[i]]=i;
+        }
+        return sol;
+    }
